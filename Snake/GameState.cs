@@ -38,4 +38,32 @@ public class GameState
             snakePositions.AddFirst(new Position(r, c));
         }
     }
+
+    private IEnumerable<Position> EmptyPositions()
+    {
+        for (int r = 0; r < Rows; r++)
+        {
+            for (int c = 0; c < Cols; c++)
+            {
+                if (Grid[r, c] == GridValue.Empty)
+                {
+                    yield return new Position(r, c);
+                }
+            }
+        }
+    }
+
+    private void AddFood()
+    {
+        List<Position> empty = new List<Position>(EmptyPositions());
+
+        if (empty.Count == 0)
+        {
+            return;
+        }
+
+        Position pos = empty[random.Next(empty.Count)];
+        Grid[pos.Row, pos.Col] = GridValue.Food;
+
+    }
 }
